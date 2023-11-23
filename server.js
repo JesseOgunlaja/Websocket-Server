@@ -4,14 +4,14 @@ const http = require("http");
 const app = express();
 app.use(
   cors({
-    origin: ["*", "http://localhos", "http://localhos:8000"],
+    origin: ["*", "http://localhost", "http://localhost:8000"],
   })
 );
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: ["*", "http://localhos", "http://localhos:8000"],
+    origin: ["*", "http://localhost", "http://localhost:8000"],
   },
 });
 
