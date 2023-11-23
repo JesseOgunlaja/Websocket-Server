@@ -1,0 +1,17 @@
+{
+  "name": "express-websocket-server",
+  "version": "1.0.0",
+  "description": "A websocket server built using express",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Jesse Ogunlaja",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.7.2"
+  }
+}
