@@ -7,7 +7,9 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:8000"],
+    origin: process.env.PORT
+      ? "https://realtime-nextjs-chat-app.vercel.app"
+      : "http://localhost:3000",
   },
 });
 
