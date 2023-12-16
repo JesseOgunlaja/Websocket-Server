@@ -27,6 +27,7 @@ function decryptString(nameGiven) {
 io.use((socket, next) => {
   const unauthorised = new Response("Unauthorised");
   if (!socket.handshake.auth.token && !socket.handshake.auth.password) {
+    console.log("unauthorised");
     return unauthorised;
   }
   if (socket.handshake.auth.token) {
@@ -34,17 +35,20 @@ io.use((socket, next) => {
       if (
         decryptString(socket.handshake.auth.token) !== socket.handshake.query.id
       ) {
+        console.log("unauthorised");
         return unauthorised;
       }
       return next();
     } catch {
+      console.log("unauthorised");
+
       return unauthorised;
     }
   }
   if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
     return unauthorised;
   }
-  next();
+  return next();
 }).on("connection", (socket) => {
   console.log("User connected");
   socket.on(process.env.WEBSOCKET_KEY, (id, event, msg) => {
