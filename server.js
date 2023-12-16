@@ -24,7 +24,32 @@ function decryptString(nameGiven) {
   return parsed.nameGiven;
 }
 
-io.on("connection", (socket) => {
+io.use((socket, next) => {
+  const unauthorised = new Response("Unauthorised");
+  if (!socket.handshake.auth.token && !socket.handshake.auth.password) {
+    console.log("Unauthorised");
+    return unauthorised;
+  }
+  if (socket.handshake.auth.token) {
+    try {
+      if (
+        decryptString(socket.handshake.auth.token) !== socket.handshake.query.id
+      ) {
+        console.log("Unauthorised");
+        return unauthorised;
+      }
+      return next();
+    } catch {
+      console.log("Unauthorised");
+
+      return unauthorised;
+    }
+  }
+  if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
+    return unauthorised;
+  }
+  return next();
+}).on("connection", (socket) => {
   console.log("User connected");
   socket.on(process.env.WEBSOCKET_KEY, (id, event, msg) => {
     console.log(id, event, msg);
