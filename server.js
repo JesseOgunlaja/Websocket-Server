@@ -38,14 +38,15 @@ io.use((socket, next) => {
         console.log("Unauthorised");
         return unauthorised;
       }
+      socket.join(socket.handshake.query.id);
       return next();
     } catch {
       console.log("Unauthorised");
-
       return unauthorised;
     }
   }
   if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
+    console.log("Unauthorised");
     return unauthorised;
   }
   return next();
@@ -53,7 +54,7 @@ io.use((socket, next) => {
   console.log("User connected");
   socket.on(process.env.WEBSOCKET_KEY, (id, event, msg) => {
     console.log(id, event, msg);
-    socket.broadcast.emit(id, event, msg);
+    io.to(id).emit(id, event, msg);
   });
   socket.on("disconnect", () => {
     console.log("User disconnected");
