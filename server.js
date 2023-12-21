@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: process.env.PORT
-      ? "https://realtime-nextjs-chat-app.vercel.app"
+      ? "https://whispernet.chat"
       : "http://localhost:3000",
   },
 });
