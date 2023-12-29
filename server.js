@@ -15,13 +15,12 @@ const io = new Server(server, {
 
 const PORT = process.env.PORT || 5000;
 
-function decryptString(nameGiven) {
+function decryptString(value) {
   const decrypted = CryptoJS.AES.decrypt(
-    nameGiven,
+    value,
     process.env.ENCRYPTION_KEY
   ).toString(CryptoJS.enc.Utf8);
-  const parsed = JSON.parse(decrypted);
-  return parsed.nameGiven;
+  return decrypted;
 }
 
 io.use((socket, next) => {
