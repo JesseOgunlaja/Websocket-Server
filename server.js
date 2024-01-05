@@ -45,6 +45,8 @@ io.use((socket, next) => {
     }
   }
   if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
+    console.log(socket.handshake.auth.password);
+    console.log(process.env.WEBSOCKET_KEY);
     console.log("Unauthorised");
     return unauthorised;
   }
