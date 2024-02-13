@@ -7,9 +7,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: process.env.PORT
-      ? "https://whispernet.chat"
-      : "http://localhost:3000",
+    origin: "*",
   },
 });
 
@@ -47,6 +45,9 @@ io.use((socket, next) => {
   if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
     console.log("Unauthorised");
     return unauthorised;
+  }
+  if (socket.handshake.auth.password === process.env.WEBSOCKET_KEY) {
+    console.log(socket.handshake.query.test);
   }
   return next();
 }).on("connection", (socket) => {
