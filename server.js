@@ -11,6 +11,8 @@ const io = new Server(server, {
   },
 });
 
+app.use(express.json());
+
 const PORT = process.env.PORT || 5000;
 
 function decryptString(value) {
@@ -21,44 +23,30 @@ function decryptString(value) {
   return decrypted;
 }
 
+app.post("/emit-event", (req, res) => {
+  const { id, event, msg, password } = req.body;
+
+  if (!id || !event || !msg || !password) {
+    return res.status(400).json({ message: "Missing values" });
+  }
+
+  if (password !== process.env.WEBSOCKET_KEY) {
+    return res.status(401).json({ message: "Invalid password" });
+  }
+
+  io.to(id).emit(event, msg);
+
+  return res.status(200).json({ message: "Event emitted successfully" });
+});
+
 io.use((socket, next) => {
-  const unauthorised = new Response("Unauthorised");
-  if (!socket.handshake.auth.token && !socket.handshake.auth.password) {
-    console.log("Unauthorised");
-    return unauthorised;
+  const token = socket.handshake.auth.token;
+  const id = socket.handshake.query.id;
+  if (token && decryptString(token) === id) {
+    socket.join(id);
+    return next();
   }
-  if (socket.handshake.auth.token) {
-    try {
-      if (
-        decryptString(socket.handshake.auth.token) !== socket.handshake.query.id
-      ) {
-        console.log("Unauthorised");
-        return unauthorised;
-      }
-      socket.join(socket.handshake.query.id);
-      return next();
-    } catch {
-      console.log("Unauthorised");
-      return unauthorised;
-    }
-  }
-  if (socket.handshake.auth.password !== process.env.WEBSOCKET_KEY) {
-    console.log("Unauthorised");
-    return unauthorised;
-  }
-  if (socket.handshake.auth.password === process.env.WEBSOCKET_KEY) {
-    console.log(socket.handshake.query.test);
-  }
-  return next();
-}).on("connection", (socket) => {
-  console.log("User connected");
-  socket.on(process.env.WEBSOCKET_KEY, (id, event, msg) => {
-    console.log(id, event, msg);
-    io.to(id).emit(id, event, msg);
-  });
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
+  return new Response("Unauthorised");
 });
 
 server.listen(PORT, () => {
