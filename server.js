@@ -34,6 +34,8 @@ app.post("/emit-event", (req, res) => {
     return res.status(401).json({ message: "Invalid password" });
   }
 
+  console.log(id, event, msg);
+
   io.to(id).emit(event, msg);
 
   return res.status(200).json({ message: "Event emitted successfully" });
