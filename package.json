@@ -4,7 +4,7 @@
   "description": "A websocket server built using express",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "fastify start server.js"
   },
   "author": "Jesse Ogunlaja",
   "license": "ISC",
