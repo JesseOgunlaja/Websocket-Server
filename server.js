@@ -13,6 +13,8 @@ function decryptString(value) {
 }
 
 module.exports = (fastify, options, next) => {
+  const PORT = process.env.PORT || 5000;
+
   fastify.register(fastifyCors, {
     origin: "*",
   });
@@ -22,6 +24,7 @@ module.exports = (fastify, options, next) => {
       origin: "*",
     },
   });
+
   fastify.ready().then(() => {
     fastify.io.use((socket, next) => {
       const token = socket.handshake.auth.token;
@@ -33,6 +36,7 @@ module.exports = (fastify, options, next) => {
       return new Error("Unauthorized");
     });
   });
+
   fastify.post("/emit-event", (request, reply) => {
     const { id, event, msg, password } = request.body;
 
@@ -50,6 +54,15 @@ module.exports = (fastify, options, next) => {
 
     return reply.status(200).send({ message: "Event emitted successfully" });
   });
+
+  fastify.listen(
+    {
+      port: PORT,
+    },
+    () => {
+      console.log(`Listening on port ${PORT}`);
+    }
+  );
 
   next();
 };
