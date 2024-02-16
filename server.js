@@ -22,7 +22,7 @@ function decryptString(value) {
   return decrypted;
 }
 
-fastify.post("/emit-event", (request, reply) => {
+fastify.post("/emit-event", async (request, reply) => {
   const { id, event, msg, password } = request.body;
 
   if (!id || !event || !msg || !password) {
@@ -35,7 +35,7 @@ fastify.post("/emit-event", (request, reply) => {
 
   console.log(id, event, msg);
 
-  setTimeout(() => fastify.io.to(id).emit(event, msg), 1);
+  fastify.io.to(id).emit(event, msg);
 
   return reply.status(200).send({ message: "Event emitted successfully" });
 });
