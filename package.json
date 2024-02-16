@@ -1,7 +1,7 @@
 {
-  "name": "fastify-websocket-server",
+  "name": "websocket-server",
   "version": "1.0.0",
-  "description": "A websocket server built using fastify",
+  "description": "A websocket server built with fastify",
   "main": "server.js",
   "scripts": {
     "start": "fastify start -w server.js"
