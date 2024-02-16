@@ -1,10 +1,10 @@
 {
-  "name": "express-websocket-server",
+  "name": "fastify-websocket-server",
   "version": "1.0.0",
-  "description": "A websocket server built using express",
+  "description": "A websocket server built using fastify",
   "main": "server.js",
   "scripts": {
-    "start": "fastify start server.js"
+    "start": "fastify start -w server.js"
   },
   "author": "Jesse Ogunlaja",
   "license": "ISC",
@@ -13,14 +13,10 @@
     "@fastify/websocket": "^8.3.1",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
-    "fastify": "^4.26.1",
     "fastify-cli": "^6.1.1",
     "fastify-plugin": "^4.5.1",
     "fastify-socket.io": "^5.0.0",
-    "socket.io": "^4.7.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
+    "socket.io": "^4.7.4"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8",

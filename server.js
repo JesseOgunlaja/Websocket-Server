@@ -1,5 +1,4 @@
 require("dotenv").config();
-const fastify = require("fastify")();
 const fastifySocketIo = require("fastify-socket.io");
 const fastifyCors = require("@fastify/cors");
 const CryptoJS = require("crypto-js");
@@ -12,7 +11,7 @@ function decryptString(value) {
   return decrypted;
 }
 
-module.exports = (fastify, options, next) => {
+module.exports = (fastify, _, next) => {
   const PORT = process.env.PORT || 5000;
 
   fastify.register(fastifyCors, {
