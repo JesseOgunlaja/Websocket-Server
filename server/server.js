@@ -11,7 +11,7 @@ function decryptString(value) {
   return decrypted;
 }
 
-module.exports = (fastify, _, next) => {
+module.exports = (fastify, _, done) => {
   const PORT = process.env.PORT || 5000;
 
   fastify.register(fastifyCors, {
@@ -63,5 +63,5 @@ module.exports = (fastify, _, next) => {
     }
   );
 
-  next();
+  done();
 };
