@@ -14,6 +14,7 @@ dotenv.config();
 export default async function (fastify, _, done) {
   // fastify.ready().then(() => {
   //   fastify.io.use((socket, next) => {
+
   //     const token = socket.handshake.auth.token;
   //     const id = socket.handshake.query.id;
   //     if (token && decryptString(token) === id) {
