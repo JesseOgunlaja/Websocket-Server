@@ -1,12 +1,10 @@
 "use strict";
 
-import * as dotenv from "dotenv";
-dotenv.config();
+require("dotenv").config();
 
-import Fastify from "fastify";
-const app = Fastify();
+const app = require("fastify")();
 
-app.register(import("./server"));
+app.register(require("./server"));
 
 export default async (req, res) => {
   await app.ready();
