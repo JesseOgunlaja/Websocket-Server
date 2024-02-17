@@ -7,6 +7,16 @@ const app = Fastify({
   logger: true,
 });
 
+fastify.register(fastifyCors, {
+  origin: "*",
+});
+
+fastify.register(fastifySocketIo, {
+  cors: {
+    origin: "*",
+  },
+});
+
 app.register(require("../server/server"));
 
 export default async (req, res) => {

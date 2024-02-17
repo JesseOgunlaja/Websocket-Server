@@ -1,10 +1,11 @@
 {
   "name": "websocket-server",
   "version": "1.0.0",
+  "type": "module",
   "description": "A websocket server built with fastify",
   "main": "server.js",
   "scripts": {
-    "start": "fastify start -w server.js"
+    "start": "fastify start -w server/server.js -p 5000"
   },
   "author": "Jesse Ogunlaja",
   "license": "ISC",
