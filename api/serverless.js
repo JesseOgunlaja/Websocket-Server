@@ -7,11 +7,11 @@ const app = Fastify({
   logger: true,
 });
 
-fastify.register(fastifyCors, {
+app.register(fastifyCors, {
   origin: "*",
 });
 
-fastify.register(fastifySocketIo, {
+app.register(fastifySocketIo, {
   cors: {
     origin: "*",
   },
