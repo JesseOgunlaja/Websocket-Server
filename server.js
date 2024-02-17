@@ -1,7 +1,11 @@
 require("dotenv").config();
-const fastifySocketIo = require("fastify-socket.io");
+import fastifySocketIo from "fastify-socket.io";
 const fastifyCors = require("@fastify/cors");
 const CryptoJS = require("crypto-js");
+
+fastifySocketIo({
+  websocketServer: require("eiows").Server,
+});
 
 function decryptString(value) {
   const decrypted = CryptoJS.AES.decrypt(
