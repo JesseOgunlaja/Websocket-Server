@@ -1,7 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import fastifySocketIo from "fastify-socket.io";
-import fastifyCors from "@fastify/cors";
+
 import CryptoJS from "crypto-js";
 
 function decryptString(value) {
@@ -14,16 +13,6 @@ function decryptString(value) {
 
 export default async function (fastify, _, done) {
   const PORT = process.env.PORT || 5000;
-
-  fastify.register(fastifyCors, {
-    origin: "*",
-  });
-
-  fastify.register(fastifySocketIo, {
-    cors: {
-      origin: "*",
-    },
-  });
 
   fastify.ready().then(() => {
     fastify.io.use((socket, next) => {
@@ -54,15 +43,6 @@ export default async function (fastify, _, done) {
 
     return reply.status(200).send({ message: "Event emitted successfully" });
   });
-
-  fastify.listen(
-    {
-      port: PORT,
-    },
-    () => {
-      console.log(`Listening on port ${PORT}`);
-    }
-  );
 
   done();
 }
