@@ -2,6 +2,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import Fastify from "fastify";
+import fastifySocketIo from "fastify-socket.io";
+import fastifyCors from "@fastify/cors";
 
 const app = Fastify({
   logger: true,
