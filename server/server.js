@@ -1,15 +1,15 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-import CryptoJS from "crypto-js";
+// import CryptoJS from "crypto-js";
 
-function decryptString(value) {
-  const decrypted = CryptoJS.AES.decrypt(
-    value,
-    process.env.ENCRYPTION_KEY
-  ).toString(CryptoJS.enc.Utf8);
-  return decrypted;
-}
+// function decryptString(value) {
+//   const decrypted = CryptoJS.AES.decrypt(
+//     value,
+//     process.env.ENCRYPTION_KEY
+//   ).toString(CryptoJS.enc.Utf8);
+//   return decrypted;
+// }
 
 export default async function (fastify, _, done) {
   // fastify.ready().then(() => {
