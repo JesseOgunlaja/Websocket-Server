@@ -12,21 +12,19 @@ function decryptString(value) {
 }
 
 export default async function (fastify, _, done) {
-  const PORT = process.env.PORT || 5000;
+  // fastify.ready().then(() => {
+  //   fastify.io.use((socket, next) => {
+  //     const token = socket.handshake.auth.token;
+  //     const id = socket.handshake.query.id;
+  //     if (token && decryptString(token) === id) {
+  //       socket.join(id);
+  //       return next();
+  //     }
+  //     return new Error("Unauthorized");
+  //   });
+  // });
 
-  fastify.ready().then(() => {
-    fastify.io.use((socket, next) => {
-      const token = socket.handshake.auth.token;
-      const id = socket.handshake.query.id;
-      if (token && decryptString(token) === id) {
-        socket.join(id);
-        return next();
-      }
-      return new Error("Unauthorized");
-    });
-  });
-
-  fastify.post("/emit-event", (request, reply) => {
+  fastify.get("/emit-event", (request, reply) => {
     const { id, event, msg, password } = request.body;
 
     if (!id || !event || !msg || !password) {
@@ -39,7 +37,7 @@ export default async function (fastify, _, done) {
 
     console.log(id, event, msg);
 
-    fastify.io.to(id).emit(event, msg);
+    // fastify.io.to(id).emit(event, msg);
 
     return reply.status(200).send({ message: "Event emitted successfully" });
   });
