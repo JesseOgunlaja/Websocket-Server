@@ -19,6 +19,7 @@ module.exports = (fastify, _, done) => {
   });
 
   fastify.register(fastifySocketIo, {
+    wsEngine: require("eiows").Server,
     cors: {
       origin: "*",
     },
